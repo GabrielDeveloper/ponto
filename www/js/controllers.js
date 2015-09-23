@@ -33,8 +33,17 @@ angular.module('starter.controllers', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
-    $http.post('http://phpextreme.com.br/site/api/auth/', {data: $scope.loginData}).then(function(resp) {
-                $scope.text = resp.data + ' - ' + resp.status;
+    $http({
+        method:'post', 
+        url:'http://phpextreme.com.br/site/api/auth/', 
+        data: $scope.loginData,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(function(resp) {
+                if(resp.data.error){ 
+                    $scope.text = 'Erro ao logar';
+                } else {
+                    $scope.text = 'Token = ' + resp.data.token;
+                }
                 console.log(resp);
                 $scope.referencia = resp.data.vd_ref;
                 // For JSON responses, resp.data contains the result
