@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,7 +8,8 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
+  $scope.isAutenticate = false;
+  console.log($scope.isAutenticate);
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -32,7 +33,17 @@ angular.module('starter.controllers', [])
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
-
+    $http.post('http://phpextreme.com.br/site/api/auth/', {data: $scope.loginData}).then(function(resp) {
+                $scope.text = resp.data + ' - ' + resp.status;
+                console.log(resp);
+                $scope.referencia = resp.data.vd_ref;
+                // For JSON responses, resp.data contains the result
+            }, function(err) {
+                console.error('ERR', err);
+                // err.status will contain the status code
+        });
+    
+    
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
