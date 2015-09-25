@@ -35,10 +35,14 @@ angular.module('starter.controllers', [])
     $http({
         method:'post', 
         url:'http://phpextreme.com.br/site/api/auth/', 
+        //url:'http://localhost:8000/user',
         data: $.param($scope.loginData),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        headers: { 
+			'Content-Type': 'application/x-www-form-urlencoded',
+		 }
     }).then(function(resp) {
                 $scope.text = 'Token = ' + resp.data.token;
+		$scope.isAutenticate = true;
                 // For JSON responses, resp.data contains the result
             }, function(error) {
 		$scope.text = error.status + ' - ' + error.statusText;
