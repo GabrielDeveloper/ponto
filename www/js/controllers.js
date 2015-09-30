@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
   }
 }])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -27,13 +27,27 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+	$scope.lists = [
+		{ title: "teste", id: 1},
+		{ title: "Gabriel", id:2}
+	];
+
 	$scope.getPhoto = function() {
-    Camera.getPicture().then(function(imageURI) {
-      console.log(imageURI);
-    }, function(err) {
-      console.err(err);
-    });
-  };
+    		Camera.getPicture().then(function(imageURI) {
+      			$scope.imgUrl = imageURI;
+    		}, function(err) {
+      			console.err(err);
+    		});
+  	};
+	function success(pos){
+		$scope.longi = pos.coords.longitude;
+		$scope.lat   = pos.coords.latitude;
+	}
+	$scope.localization = function(){
+	
+		var data = navigator.geolocation.getCurrentPosition(success);
+	}
+	
 
   $scope.isAutenticate = false;
   console.log($scope.isAutenticate);
@@ -96,5 +110,22 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('ListCtrl', function($scope, $stateParams) {
+
+	navigator.geolocation.getCurrentPosition(success);
+        function success(pos){
+                var mapOptions = {
+                	zoom: 16,
+                	center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                	mapTypeId: google.maps.MapTypeId.ROADMAP
+        	};
+        	$scope.map = new google.maps.Map(document.getElementById('mapDiv'), mapOptions);
+		new google.maps.Marker({
+           		map: $scope.map,
+            		position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+            		title: "Aqui"
+        	});
+
+
+        }
 });

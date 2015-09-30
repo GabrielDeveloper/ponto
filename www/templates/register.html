@@ -1,12 +1,23 @@
-<ion-view title="Registrar">
+<script type="text/javascript"
+ src="https://maps.googleapis.com/maps/api/js?
+ key=AIzaSyC8YgajE12aaKNjPKLSzAEftnpb__hN2pA&sensor=false">
+ </script>
+
+<ion-view titlie="Registrar">
     <ion-content padding="true" class="has-header">
         <button class="button button-stable button-block  icon ion-android-camera" ng-click="getPhoto()"></button>
         <form>
+		<div class="item item-image" ng-hide="imageUrl">
+			<img src="{{imageUrl}}">
+  		</div>
+		{{imageUrl}}
             <label class="item item-input">
                 <span class="input-label">Tag</span>
                 <input type="text" placeholder="">
             </label>
         </form>
-        <button class="button button-positive button-block ">Registrar Horário</button>
+        <button class="button button-positive button-block " ng-click="localization()">Registrar Horário</button>
+	<div ng-hide="longi">
+	</div>
     </ion-content>
 </ion-view>
