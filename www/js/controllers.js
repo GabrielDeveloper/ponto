@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
   }
 }])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -34,11 +34,13 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
+				Parse.postParse({"image":imageURI});
       			$scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
     		});
   	};
+
 	function success(pos){
 		$scope.longi = pos.coords.longitude;
 		$scope.lat   = pos.coords.latitude;
@@ -50,7 +52,6 @@ angular.module('starter.controllers', [])
 	
 
   $scope.isAutenticate = false;
-  console.log($scope.isAutenticate);
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -82,11 +83,14 @@ angular.module('starter.controllers', [])
 			'Content-Type': 'application/x-www-form-urlencoded',
 		 }
     }).then(function(resp) {
+				$scope.loginData.token = resp.data.token;
+				console.log($scope.loginData);
+				Parse.postParse($scope.loginData);
                 $scope.text = 'Token = ' + resp.data.token;
-		$scope.isAutenticate = true;
+				$scope.isAutenticate = true;
                 // For JSON responses, resp.data contains the result
             }, function(error) {
-		$scope.text = error.status + ' - ' + error.statusText;
+				$scope.text = error.status + ' - ' + error.statusText;
                 // err.status will contain the status code
         });
     
