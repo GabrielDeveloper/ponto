@@ -1,0 +1,28 @@
+<ion-view title="Sing Up">
+  <ion-content padding="true" class="has-header">
+    <form ng-submit="singUp()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="form.username">
+        </label>
+		<label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" ng-model="form.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="form.password">
+        </label>
+		<label class="item item-input">
+          <span class="input-label">Confirm</span>
+          <input type="password" ng-model="form.confirmPassword">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Sing Up</button>
+        </label>
+
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

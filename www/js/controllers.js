@@ -34,7 +34,6 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
-				Parse.postParse({"image":imageURI});
       			$scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
@@ -88,6 +87,7 @@ angular.module('starter.controllers', [])
 				Parse.postParse($scope.loginData);
                 $scope.text = 'Token = ' + resp.data.token;
 				$scope.isAutenticate = true;
+				$location.path('/register');
                 // For JSON responses, resp.data contains the result
             }, function(error) {
 				$scope.text = error.status + ' - ' + error.statusText;
@@ -115,8 +115,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', function($scope, $stateParams) {
-
-	navigator.geolocation.getCurrentPosition(success);
+		
+	navigator.geolocation.getCurrentPosition(success, error);
         function success(pos){
                 var mapOptions = {
                 	zoom: 16,
@@ -132,4 +132,28 @@ angular.module('starter.controllers', [])
 
 
         }
-});
+		
+		function error(err){
+			console.log(err);
+		}
+})
+
+.controller('SingupCtrl', function($scope, Parse){
+	$scope.form = {activate: false};
+	$scope.singUp = function(){
+			var User = Parse.singUp();
+			console.log($scope.form);
+			User.save($scope.form, {
+				success: function(User){
+					console.log(User);
+				},
+				error: function(User, error) {
+					console.log(error);
+					console.log(User);
+				}
+			});
+		}
+})
+
+
+;

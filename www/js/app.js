@@ -66,6 +66,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
+  	.state('app.singup',{
+		url:'/singup',
+		views: {
+			'menuContent' : {
+				templateUrl: 'templates/singup.html',
+				controller: 'SingupCtrl'
+			}
+		}
+	})
+
   .state('app.lists', {
 	url: '/lists',
 	views: {

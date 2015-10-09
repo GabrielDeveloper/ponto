@@ -8,6 +8,12 @@
       Ionic Framework Team
     </author>
   <content src="index.html"/>
+	<access origin="*" />
+	<allow-navigation href="http://*/*" />
+	<allow-navigation href="https://*/*" />
+	<allow-navigation href="data:*" />
+	<allow-intent href="http://*/*" />
+<allow-intent href="https://*/*" />
   <access origin="*" subdomains="true"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
