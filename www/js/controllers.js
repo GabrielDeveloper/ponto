@@ -34,6 +34,7 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
+				Parse.postPicture({url:imageURI});
       			$scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
@@ -115,7 +116,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', function($scope, $stateParams) {
-		
 	navigator.geolocation.getCurrentPosition(success, error);
         function success(pos){
                 var mapOptions = {
@@ -153,7 +153,4 @@ angular.module('starter.controllers', [])
 				}
 			});
 		}
-})
-
-
-;
+});

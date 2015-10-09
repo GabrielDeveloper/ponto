@@ -12,6 +12,13 @@ angular.module('starter').factory('Parse', function(){
 			var objUser = Parse.Object.extend("Users");
 			var User = new objUser();
 			return User;
+		},
+		postPicture : function (data){
+			var objPicture = Parse.Object.extend("Picture");
+			var Picture = new objPicture();
+			Picture.save(data).then(function(){
+				return Picture;
+			});
 		}
 	};
 });
