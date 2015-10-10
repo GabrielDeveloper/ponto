@@ -116,26 +116,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', function($scope, $stateParams) {
-	navigator.geolocation.getCurrentPosition(success, error);
-        function success(pos){
-                var mapOptions = {
-                	zoom: 16,
-                	center: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                	mapTypeId: google.maps.MapTypeId.ROADMAP
-        	};
-        	$scope.map = new google.maps.Map(document.getElementById('mapDiv'), mapOptions);
-		new google.maps.Marker({
-           		map: $scope.map,
-            		position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-            		title: "Aqui"
-        	});
+	$scope.mapCreated = function(map) {
+    		$scope.map = map;
+  	};
 
-
-        }
-		
-		function error(err){
-			console.log(err);
-		}
 })
 
 .controller('SingupCtrl', function($scope, Parse){
