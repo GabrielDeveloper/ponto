@@ -1,23 +1,5 @@
 angular.module('starter.controllers', [])
 
-.factory('Camera', ['$q', function($q) {
-
-  return {
-    getPicture: function(options) {
-      var q = $q.defer();
-
-      navigator.camera.getPicture(function(result) {
-        // Do any magic you need
-        q.resolve(result);
-      }, function(err) {
-        q.reject(err);
-      }, options);
-
-      return q.promise;
-    }
-  }
-}])
-
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse) {
 
   // With the new view caching in Ionic, Controllers are only called
@@ -34,22 +16,13 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
-				Parse.postPicture({url:imageURI});
+			Parse.postPicture({url:imageURI});
       			$scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
     		});
   	};
 
-	function success(pos){
-		$scope.longi = pos.coords.longitude;
-		$scope.lat   = pos.coords.latitude;
-	}
-	$scope.localization = function(){
-	
-		var data = navigator.geolocation.getCurrentPosition(success);
-	}
-	
 
   $scope.isAutenticate = false;
   // Form data for the login modal
@@ -73,7 +46,21 @@ angular.module('starter.controllers', [])
   };
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
+  $scope.doLogin = function(){
+	var teste = Parse.authUser($scope.loginData);
+	teste.find({
+		success: function (res){
+			if(res.length > 0){
+				$scope.closeLogin();
+				$scope.isAutenticate = true;
+			}
+		},
+		error : function(err){
+			console.log(err);
+		}
+	});
+  }
+  /*function() {
     $http({
         method:'post', 
         url:'http://phpextreme.com.br/site/api/auth/', 
@@ -83,17 +70,17 @@ angular.module('starter.controllers', [])
 			'Content-Type': 'application/x-www-form-urlencoded',
 		 }
     }).then(function(resp) {
-				$scope.loginData.token = resp.data.token;
-				console.log($scope.loginData);
-				Parse.postParse($scope.loginData);
+		$scope.loginData.token = resp.data.token;
+		console.log($scope.loginData);
+		Parse.postParse($scope.loginData);
                 $scope.text = 'Token = ' + resp.data.token;
-				$scope.isAutenticate = true;
-				$location.path('/register');
+		$scope.isAutenticate = true;
+		$location.path('/register');
                 // For JSON responses, resp.data contains the result
-            }, function(error) {
-				$scope.text = error.status + ' - ' + error.statusText;
+     }, function(error) {
+		$scope.text = error.status + ' - ' + error.statusText;
                 // err.status will contain the status code
-        });
+     });
     
     
     // Simulate a login delay. Remove this and replace with your login
@@ -101,7 +88,7 @@ angular.module('starter.controllers', [])
     $timeout(function() {
       $scope.closeLogin();
     }, 1000);
-  };
+  };*/
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -116,25 +103,22 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListCtrl', function($scope, $stateParams) {
-	$scope.mapCreated = function(map) {
-    		$scope.map = map;
-  	};
 
 })
 
-.controller('SingupCtrl', function($scope, Parse){
+.controller('SingupCtrl', function($scope, Parse, $location){
 	$scope.form = {activate: false};
 	$scope.singUp = function(){
-			var User = Parse.singUp();
-			console.log($scope.form);
-			User.save($scope.form, {
-				success: function(User){
-					console.log(User);
-				},
-				error: function(User, error) {
-					console.log(error);
-					console.log(User);
-				}
-			});
-		}
+		var User = Parse.singUp();
+		console.log($scope.form);
+		User.save($scope.form, {
+		success: function(User){
+			$location.path("#/app/home");
+			},
+			error: function(User, error) {
+				console.log(error);
+				console.log(User);
+			}
+		});
+	}
 });
