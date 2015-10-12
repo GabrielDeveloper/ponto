@@ -121,4 +121,17 @@ angular.module('starter.controllers', [])
 			}
 		});
 	}
+})
+.controller('ListAdminCtrl', function($scope){
+
+$scope.items = [
+    { id: 0 , text: "PHP"},
+    { id: 1 , text: "Angular"},
+    { id: 2 , text: "Ionic"},
+    { id: 3 , text: "Ruby"},
+    { id: 4 , text: "Node"},
+];
+
+
+
 });

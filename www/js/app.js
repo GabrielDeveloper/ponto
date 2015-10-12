@@ -95,7 +95,16 @@ angular.module('starter', [
         controller: 'ListCtrl'
       }
     }
-  });
+  })
+.state('app.listAdmin',{
+	url : '/listAdmin',
+	views: {
+		'menuContent': {
+			templateUrl: 'templates/listAdmin.html',
+		        controller: 'ListAdminCtrl'
+      		}
+	}
+});
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });
