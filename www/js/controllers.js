@@ -16,13 +16,21 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
-			Parse.postPicture({url:imageURI});
+				Parse.postPicture({url:imageURI});
       			$scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
-    		});
+    		}, {
+				quality: 75,
+		      targetWidth: 320,
+		      targetHeight: 320,
+		      saveToPhotoAlbum: true
+			});
   	};
 
+	$scope.redirect = function(){
+		$location.hash("/app/home");
+	};
 
   $scope.isAutenticate = false;
   // Form data for the login modal
@@ -43,6 +51,10 @@ angular.module('starter.controllers', [])
   // Open the login modal
   $scope.login = function() {
     $scope.modal.show();
+  };
+
+  $scope.logout = function(){
+	$scope.isAutenticate = false;
   };
 
   // Perform the login action when the user submits the login form
@@ -113,7 +125,7 @@ angular.module('starter.controllers', [])
 		console.log($scope.form);
 		User.save($scope.form, {
 		success: function(User){
-			$location.path("#/app/home");
+			$location.path("/app/home");
 			},
 			error: function(User, error) {
 				console.log(error);
@@ -123,14 +135,21 @@ angular.module('starter.controllers', [])
 	}
 })
 .controller('ListAdminCtrl', function($scope, Parse){
-
+    $scope.items = [];
 	Parse.getUsers().find({
 		success : function(result){
-			
-			console.log(result);
+			$scope.items.lenght = 0;
+			angular.forEach(result, function(value, key){
+				$scope.items.push({
+						username: value.attributes.username, 
+						email: value.attributes.email, 
+						checked: value.attributes.activate});
+			});
+
+            $scope.$apply();
 		}
 	});
-
+/*
 $scope.items = [
     { id: 0 , text: "PHP", email: 'gabriel@outlook.com'},
     { id: 1 , text: "Angular", email: 'angular@gmail.com'},
@@ -139,6 +158,6 @@ $scope.items = [
     { id: 4 , text: "Node", email: 'node@yahoo.com'},
 ];
 
-
+*/
 
 });

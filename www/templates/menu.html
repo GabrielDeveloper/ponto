@@ -18,7 +18,7 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
+        <ion-item menu-close ng-click="login()" ng-show="!isAutenticate">
           Login
         </ion-item>
         <ion-item menu-close href="#/app/search">
@@ -30,10 +30,13 @@
         <ion-item menu-close href="#/app/lists">
           Lists
         </ion-item>
-	 <ion-item menu-close href="#/app/listAdmin">
+	 <ion-item menu-close href="#/app/listAdmin" ng-show="isAutenticate">
           Admin List
         </ion-item>
       </ion-list>
+	  <ion-item menu-close ng-click="logout()" ng-show="isAutenticate">
+          Logout
+      </ion-item>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

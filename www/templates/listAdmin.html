@@ -1,4 +1,4 @@
-<ion-view title="Admin Users">
+<ion-view title="Admin Users" ng-controller="ListAdminCtrl">
 	<ion-content>
 		<div class="list list-inset">
 			<label class="item item-input">
@@ -9,7 +9,7 @@
 		<ion-checkbox ng-repeat="item in items | filter:busca"
                       ng-model="item.checked" 
                       ng-checked="item.checked">
-          		{{ item.text }}<br>
+          		{{ item.username }}<br>
 			<span class="email">{{item.email}}</span>
         	</ion-checkbox>
 	</ion-content>

@@ -100,8 +100,7 @@ angular.module('starter', [
 	url : '/listAdmin',
 	views: {
 		'menuContent': {
-			templateUrl: 'templates/listAdmin.html',
-		        controller: 'ListAdminCtrl'
+			templateUrl: 'templates/listAdmin.html'
       		}
 	}
 });
