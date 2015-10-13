@@ -122,14 +122,21 @@ angular.module('starter.controllers', [])
 		});
 	}
 })
-.controller('ListAdminCtrl', function($scope){
+.controller('ListAdminCtrl', function($scope, Parse){
+
+	Parse.getUsers().find({
+		success : function(result){
+			
+			console.log(result);
+		}
+	});
 
 $scope.items = [
-    { id: 0 , text: "PHP"},
-    { id: 1 , text: "Angular"},
-    { id: 2 , text: "Ionic"},
-    { id: 3 , text: "Ruby"},
-    { id: 4 , text: "Node"},
+    { id: 0 , text: "PHP", email: 'gabriel@outlook.com'},
+    { id: 1 , text: "Angular", email: 'angular@gmail.com'},
+    { id: 2 , text: "Ionic", email: 'ionic @hotmail.com'},
+    { id: 3 , text: "Ruby", email: 'ruby@bol.com.br'},
+    { id: 4 , text: "Node", email: 'node@yahoo.com'},
 ];
 
 

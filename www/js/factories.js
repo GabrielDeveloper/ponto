@@ -50,6 +50,11 @@ angular.module('starter.factory', [])
 			return query;
 			
 			
+		},
+		getUsers : function(){
+			var User  = Parse.Object.extend("Users");
+			var query = new Parse.Query(User);
+			return query;
 		}
         };
 });
