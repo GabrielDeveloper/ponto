@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse, $cordovaOauth) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -72,6 +72,33 @@ angular.module('starter.controllers', [])
 		}
 	});
   }
+
+	$scope.googleUrl = function(){
+
+                var appScope =  [
+                                "https://www.googleapis.com/auth/urlshortener",
+                                "https://www.googleapis.com/auth/userinfo.email"
+                                ];
+
+                $cordovaOauth.google("468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com", appScope).then(function(result){
+                        console.log(result);
+                        }, function(error) {
+                                console.log(error);
+                        });
+        }
+
+        $scope.dropboxUrl = function() {
+
+                $cordovaOauth.dropbox("lcvhtbvooqgwzpt").then(function(result){
+                        console.log(result);
+                }, function(error){
+                        console.log(error);
+                });
+
+        }
+
+
+
   /*function() {
     $http({
         method:'post', 
@@ -132,50 +159,31 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SearchCtrl', function($scope){
-	var service = {};
-	service.access_token = false;
-        service.redirect_url = '/#/home';
-        service.client_id = '468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com';
-        service.secret = 'TEqj12t1B44Os7xuBuyXxtnv';
-        service.scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me';
+.controller('SearchCtrl', function($scope, $cordovaOauth){
 
-	var params = 'client_id=' + encodeURIComponent(service.client_id);
-                params += '&redirect_uri=' + encodeURIComponent(service.redirect_url);
-                params += '&response_type=code';
-                params += '&scope=' + encodeURIComponent(service.scope);
-                var authUrl = 'https://accounts.google.com/o/oauth2/auth?' + params;
-	
-
-	
 	$scope.googleUrl = function(){
-			var win = window.open(authUrl, '_blank', 'location=no,toolbar=no,width=800, height=800');
-			 var context = this;
-		if (ionic.Platform.isWebView()) {
-                    console.log('using in app browser');
-			win.addEventListener('loadstart', function (data) {
-                        console.log('load start');
-                        if (data.url.indexOf(context.redirect_url) === 0) {
-                            	console.log('redirect url found ' + context.redirect_url);
-                            	console.log('window url found ' + data.url);
-                            	win.close();
-                            	var url = data.url;
-                            	var access_code = context.gulp(url, 'code');
-                            	if (access_code) {
-                                	context.validateToken(access_code, def);
-                            	} else {
-                                		def.reject({error: 'Access Code Not Found'});
-                            		}
-                        	}
-			})
-		} else {
-                    console.log('InAppBrowser not found11');
-			console.log("google window url " + win.document.URL);
-			console.log(win.document.URL.indexOf(context.redirect_url));
-		}
-	}
 
-		console.log(authUrl);
+		var appScope =  [
+				"https://www.googleapis.com/auth/urlshortener", 
+				"https://www.googleapis.com/auth/userinfo.email"
+				];
+
+		$cordovaOauth.google("468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com", appScope).then(function(result){
+			console.log(result);
+			}, function(error) {
+            			console.log(error);
+        		});
+	}
+	
+	$scope.dropboxUrl = function() {
+
+		$cordovaOauth.dropbox("lcvhtbvooqgwzpt").then(function(result){
+                	console.log(result);
+        	}, function(error){
+                	console.log(error);
+        	});
+
+	}
 
 
 })
