@@ -81,7 +81,7 @@ angular.module('starter.controllers', [])
                                 ];
 
                 $cordovaOauth.google("468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com", appScope).then(function(result){
-                        console.log(result);
+						$scope.isAutenticate = true;
                         }, function(error) {
                                 console.log(error);
                         });
@@ -97,37 +97,6 @@ angular.module('starter.controllers', [])
 
         }
 
-
-
-  /*function() {
-    $http({
-        method:'post', 
-        url:'http://phpextreme.com.br/site/api/auth/', 
-        //url:'http://localhost:8000/user',
-        data: $.param($scope.loginData),
-        headers: { 
-			'Content-Type': 'application/x-www-form-urlencoded',
-		 }
-    }).then(function(resp) {
-		$scope.loginData.token = resp.data.token;
-		console.log($scope.loginData);
-		Parse.postParse($scope.loginData);
-                $scope.text = 'Token = ' + resp.data.token;
-		$scope.isAutenticate = true;
-		$location.path('/register');
-                // For JSON responses, resp.data contains the result
-     }, function(error) {
-		$scope.text = error.status + ' - ' + error.statusText;
-                // err.status will contain the status code
-     });
-    
-    
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };*/
 })
 
 .controller('PlaylistsCtrl', function($scope) {
@@ -143,19 +112,6 @@ angular.module('starter.controllers', [])
 
 .controller('ListCtrl', function($scope, $stateParams, $cordovaOauth) {
 
-	$cordovaOauth.google("8XmUxPky5ryWxyX_IbXKk1sV",
-		["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"])
-		.then(function (result){
-			console.log(result);
-		}, function(error){
-				console.log(error);
-		});
-
-	$cordovaOauth.dropbox("lcvhtbvooqgwzpt").then(function(result){
-		console.log(result);
-	}, function(error){
-		console.log(error);
-	});
 
 })
 
