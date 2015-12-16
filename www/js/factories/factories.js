@@ -40,7 +40,7 @@ angular.module('starter.factory', [])
                         });
                 },
 		authUser : function (data) {
-			console.log(data);
+			
 			var User = Parse.Object.extend("Users");
 			var query = new Parse.Query(User);
 

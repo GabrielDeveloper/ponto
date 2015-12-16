@@ -1,13 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse, $cordovaOauth) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse, $ionicPopup) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
 
 	$scope.lists = [
 		{ title: "teste", id: 1},
@@ -28,10 +22,6 @@ angular.module('starter.controllers', [])
 			});
   	};
 
-	$scope.redirect = function(){
-		$location.hash("/app/home");
-	};
-
   $scope.isAutenticate = false;
   // Form data for the login modal
   $scope.loginData = {};
@@ -43,10 +33,6 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   });
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
 
   // Open the login modal
   $scope.login = function() {
@@ -56,46 +42,26 @@ angular.module('starter.controllers', [])
   $scope.logout = function(){
 	$scope.isAutenticate = false;
   };
-
+  $scope.erroLogin = false;
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(){
-	var teste = Parse.authUser($scope.loginData);
-	teste.find({
+	var user = Parse.authUser($scope.loginData);
+	user.find({
 		success: function (res){
 			if(res.length > 0){
-				$scope.closeLogin();
 				$scope.isAutenticate = true;
+				$scope.modal.hide();
+			} else {
+				$scope.erroLogin = true;
+            	$scope.error = "Login ou senha não existem";
+				console.log($scope.$id);
 			}
 		},
-		error : function(err){
+		error: function(err){
 			console.log(err);
 		}
 	});
   }
-
-	$scope.googleUrl = function(){
-
-                var appScope =  [
-                                "https://www.googleapis.com/auth/urlshortener",
-                                "https://www.googleapis.com/auth/userinfo.email"
-                                ];
-
-                $cordovaOauth.google("468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com", appScope).then(function(result){
-						$scope.isAutenticate = true;
-                        }, function(error) {
-                                console.log(error);
-                        });
-        }
-
-        $scope.dropboxUrl = function() {
-
-                $cordovaOauth.dropbox("lcvhtbvooqgwzpt").then(function(result){
-                        console.log(result);
-                }, function(error){
-                        console.log(error);
-                });
-
-        }
 
 })
 
@@ -116,31 +82,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $cordovaOauth){
-
-	$scope.googleUrl = function(){
-
-		var appScope =  [
-				"https://www.googleapis.com/auth/urlshortener", 
-				"https://www.googleapis.com/auth/userinfo.email"
-				];
-
-		$cordovaOauth.google("468709106249-tmhn3mk47077lkqd2jvvrf6pfa7fp3n1.apps.googleusercontent.com", appScope).then(function(result){
-			console.log(result);
-			}, function(error) {
-            			console.log(error);
-        		});
-	}
-	
-	$scope.dropboxUrl = function() {
-
-		$cordovaOauth.dropbox("lcvhtbvooqgwzpt").then(function(result){
-                	console.log(result);
-        	}, function(error){
-                	console.log(error);
-        	});
-
-	}
-
 
 })
 

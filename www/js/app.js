@@ -9,7 +9,7 @@ angular.module('starter', [
 			'starter.controllers', 
 			'starter.directives', 
 			'ngCordova',
-			'starter.factory'
+			'starter.factory',
 			])
 
 .run(function($ionicPlatform) {
