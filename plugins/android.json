@@ -50,8 +50,7 @@
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
                         }
-                    ],
-                    "/manifest": []
+                    ]
                 }
             }
         }

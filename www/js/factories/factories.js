@@ -1,4 +1,5 @@
 angular.module('starter.factory', [])
+
 .factory('Camera', ['$q', function($q) {
 
   return {

@@ -27,7 +27,8 @@ angular.module('starter', [
     }
   });
 })
-.config(function($httpProvider){
+.config(function($httpProvider, $ionicConfigProvider){
+    $ionicConfigProvider.navBar.alignTitle("center");
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 })
 
@@ -54,7 +55,8 @@ angular.module('starter', [
       url: '/register',
       views: {
         'menuContent': {
-          templateUrl: 'templates/register.html'
+            templateUrl: 'templates/register.html',
+            controller: 'RegisterCtrl'
         }
       }
     })
@@ -77,6 +79,14 @@ angular.module('starter', [
 		}
 	}
   })
+    .state('app.report', {
+        url: '/report',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/report.html'
+            }
+        }
+    })
 
   .state('app.lists', {
 	url: '/lists',

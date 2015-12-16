@@ -10,16 +10,17 @@ angular.module('starter.controllers', [])
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
-				Parse.postPicture({url:imageURI});
-      			$scope.imgUrl = imageURI;
+		    Parse.postPicture({url:imageURI});
+      		    $scope.imgUrl = imageURI;
     		}, function(err) {
       			console.err(err);
     		}, {
-				quality: 75,
-		      targetWidth: 320,
-		      targetHeight: 320,
-		      saveToPhotoAlbum: true
-			});
+		    quality: 75,
+                    destinationType: Camera.DestinationType.FILE_URI,
+		    targetWidth: 320,
+		    targetHeight: 320,
+		    saveToPhotoAlbum: true,
+		});
   	};
 
   $scope.isAutenticate = false;
@@ -39,28 +40,32 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+    $scope.closeLogin = function(){
+        $scope.modal.hide();
+    };
+
   $scope.logout = function(){
 	$scope.isAutenticate = false;
   };
   $scope.erroLogin = false;
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(){
-	var user = Parse.authUser($scope.loginData);
-	user.find({
-		success: function (res){
-			if(res.length > 0){
-				$scope.isAutenticate = true;
-				$scope.modal.hide();
-			} else {
-				$scope.erroLogin = true;
-            	$scope.error = "Login ou senha não existem";
-				console.log($scope.$id);
-			}
-		},
-		error: function(err){
-			console.log(err);
-		}
-	});
+    var user = Parse.authUser($scope.loginData);
+    user.find({
+        success: function (res){
+	    if(res.length > 0){
+	        $scope.isAutenticate = true;
+	        $scope.modal.hide();
+	    } else {
+		$scope.erroLogin = true;
+            	$scope.error = "Username or password not exist";
+                $scope.$apply();
+	    }
+        },
+	error: function(err){
+	    console.log(err);
+	}
+    });
   }
 
 })
@@ -103,18 +108,17 @@ angular.module('starter.controllers', [])
 })
 .controller('ListAdminCtrl', function($scope, Parse){
     $scope.items = [];
-	Parse.getUsers().find({
-		success : function(result){
-			$scope.items.lenght = 0;
-			angular.forEach(result, function(value, key){
-				$scope.items.push({
-						username: value.attributes.username, 
-						email: value.attributes.email, 
-						checked: value.attributes.activate});
-			});
-
-            $scope.$apply();
-		}
+        Parse.getUsers().find({
+            success : function(result){
+	        $scope.items.lenght = 0;
+		angular.forEach(result, function(value, key){
+		    $scope.items.push({
+		        username: value.attributes.username, 
+			email: value.attributes.email, 
+			checked: value.attributes.activate});
+		    });
+                $scope.$apply();
+	    }
 	});
 /*
 $scope.items = [
@@ -127,4 +131,8 @@ $scope.items = [
 
 */
 
-});
+})
+
+.controller('RegisterCtrl', function ($scope, Parse){
+
+})

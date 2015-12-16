@@ -18,3 +18,14 @@ map {
 .browser img {
 	width: 100%;
 }
+
+.alert-error{
+    background-color: #ef473a;
+    color: #FFFFFF;
+}
+
+.calendar .row div {
+    background-color: #CCCCCC;
+    border: 1px solid #AAAAAA;
+    text-align: center;
+}

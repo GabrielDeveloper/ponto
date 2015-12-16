@@ -2,15 +2,18 @@
     <ion-content padding="true" class="has-header">
         <button class="button button-stable button-block  icon ion-android-camera" ng-click="getPhoto()"></button>
         <form>
-		<div class="item item-image" ng-hide="imageUrl">
-			<img ng-src="{{imgUrl}}" style="max-width: 100%">
+		<div class="item item-image" ng-show="imageUrl">
+			<img ng-src="{{imgUrl}}" style="max-width: 100%" ng-model="register.imgUrl">
   		</div>
-            <label class="item item-input">
+            <label class="item item-input item-select">
                 <span class="input-label">Tag</span>
-                <input type="text" placeholder="">
+                <select ng-model="register.tag">
+                    <option value="1">Entrada</option>
+                    <option value="2">Saida</option>
+                </select>
             </label>
         </form>
-        <button class="button button-positive button-block " ng-click="localization()">Registrar Horário</button>
+        <button class="button button-positive button-block " type="submit">Registrar Horário</button>
 	<div ng-hide="longi">
 	</div>
     </ion-content>
