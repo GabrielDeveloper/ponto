@@ -56,7 +56,17 @@ angular.module('starter.factory', [])
 			var User  = Parse.Object.extend("Users");
 			var query = new Parse.Query(User);
 			return query;
-		}
+		},
+        };
+})
+
+.factory('Calendar', function(){
+        return {
+            json: function(){
+                var cal = new Calendar();
+                cal.generateJSON();
+                return cal.getJSON();
+            },
         };
 });
 
