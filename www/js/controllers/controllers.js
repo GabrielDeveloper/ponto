@@ -1,12 +1,33 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse, $ionicPopup) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, Camera, $location, Parse, $ionicPopup, $cordovaSQLite) {
 
+    if (window.cordova) {
+      var db = $cordovaSQLite.openDB({ name: "testando" }); //device
+    }else{
+        var db = window.openDatabase("testando", '1', 'my', 1024 * 1024 * 100); // browser
+        db.transaction(
+            function(transaction) {
+                transaction.executeSql('CREATE TABLE IF NOT EXISTS test_table (id integer primary key, data text, data_num integer)');
+            },
+            function(error) {
+                console.log(error);
+            }
+        );
+    }
 
-	$scope.lists = [
-		{ title: "teste", id: 1},
-		{ title: "Gabriel", id:2}
-	];
+/*
+        var query = "INSERT INTO test_table (data, data_num) VALUES (?,?)";
+        $cordovaSQLite.execute(db, query, ['test', 100]).then(function(res) {
+            console.log("insertId: " + res.insertId);
+        }, function (err) {
+            console.error(err);
+        });*/
+
+    $scope.lists = [
+	    { title: "teste", id: 1},
+	    { title: "Gabriel", id:2}
+    ];
 
 	$scope.getPhoto = function() {
     		Camera.getPicture().then(function(imageURI) {
