@@ -107,8 +107,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SearchCtrl', function($scope, $cordovaOauth){
-
+.controller('SearchCtrl',  function($scope, Calendar){
+    console.log(Calendar.json());
+    $scope.json = Calendar.json();
 })
 
 .controller('SingupCtrl', function($scope, Parse, $location){
