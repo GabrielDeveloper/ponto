@@ -1,0 +1,33 @@
+<ion-navbar *navbar>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Sing Up</ion-title>
+</ion-navbar>
+
+
+<ion-content padding class="getting-started">
+
+    <ion-list>
+        <ion-item>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" value="" [(ngModel)]="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>E-mail</ion-label>
+            <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+
+    </ion-list>
+
+
+    <button (click)="singUp()" primary block>Sing Up</button>
+
+</ion-content>
+~                
